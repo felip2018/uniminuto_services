@@ -1,5 +1,8 @@
 'use strict';
 
+const USER = "admin";
+const PASS = "123";
+
 module.exports.handler = (event, context, callback) => {
     console.log("EVENTO > ", event);
     
@@ -27,12 +30,19 @@ module.exports.handler = (event, context, callback) => {
         
         console.log('Launch login');
         
+        let body = JSON.parse(event.body);
+        
+        let username = body.usuario;
+        let password = body.clave;
+        
         response = {
             statusCode: 200,
             headers: {
                 "Access-Control-Allow-Origin": "*"
             },
-            body: JSON.stringify(event.body)
+            body: JSON.stringify({
+                validation: (username == USER && password == PASS)
+            })
         }
         
         callback(null, response);
